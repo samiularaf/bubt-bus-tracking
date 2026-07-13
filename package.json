@@ -1,0 +1,32 @@
+{
+  "name": "bubt-bus-tracking",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Real-Time University Bus Tracking and Transport Management System for BUBT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:frontend": "npm run dev -w apps/frontend",
+    "dev:backend": "npm run dev -w apps/backend",
+    "build:frontend": "npm run build -w apps/frontend",
+    "build:backend": "npm run build -w apps/backend",
+    "typecheck": "npm run typecheck -w apps/frontend && npm run typecheck -w apps/backend",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "globals": "^15.15.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.18.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
