@@ -37,6 +37,7 @@ Users are **not** assigned to a fixed bus. They browse all buses and routes, and
 |---|---|
 | [`PROJECT_SPECIFICATION.md`](./PROJECT_SPECIFICATION.md) | Full functional specification — goals, roles, business logic, features |
 | [`ARCHITECTURE.md`](./ARCHITECTURE.md) | System architecture — folder structure, frontend/backend/DB/API design, auth & realtime flow, deployment |
+| [`CLASS_DIAGRAM.md`](./CLASS_DIAGRAM.md) | Domain model and service-layer class diagrams |
 | [`DATABASE_DESIGN.md`](./DATABASE_DESIGN.md) | ER diagram, table reference, relationships, constraints, indexes, seed data plan |
 | [`schema.sql`](./schema.sql) | Runnable PostgreSQL DDL for the full schema |
 | [`API_DESIGN.md`](./API_DESIGN.md) | Full REST API contract — all endpoints, request/response formats, error codes, role access matrix |
