@@ -33,7 +33,7 @@ export default function DriverChangePasswordPage() {
     try {
       await mockChangePassword(newPassword);
       showToast('Password updated. Welcome to BUBT Transit.', 'success');
-      navigate('/');
+      navigate('/driver');
     } finally {
       setIsSubmitting(false);
     }

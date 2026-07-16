@@ -28,7 +28,7 @@ export default function DriverLoginPage() {
         return;
       }
       showToast(`Welcome back, ${result.name}.`, 'success');
-      navigate('/');
+      navigate('/driver');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed.');
     } finally {

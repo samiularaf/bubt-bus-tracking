@@ -19,6 +19,10 @@ import ProfilePage from './pages/ProfilePage';
 import EditProfilePage from './pages/EditProfilePage';
 import ChangePasswordPage from './pages/ChangePasswordPage';
 import RoutinePage from './pages/RoutinePage';
+import { DriverLayout } from './features/driver/components/DriverLayout';
+import DriverHomePage from './pages/DriverHomePage';
+import DriverActiveTripPage from './pages/DriverActiveTripPage';
+import DriverProfilePage from './pages/DriverProfilePage';
 
 export default function App() {
   return (
@@ -46,6 +50,13 @@ export default function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/edit" element={<EditProfilePage />} />
         <Route path="/profile/change-password" element={<ChangePasswordPage />} />
+      </Route>
+
+      {/* Driver module — single-focus shell, no bottom tabs */}
+      <Route element={<DriverLayout />}>
+        <Route path="/driver" element={<DriverHomePage />} />
+        <Route path="/driver/trips/:tripId" element={<DriverActiveTripPage />} />
+        <Route path="/driver/profile" element={<DriverProfilePage />} />
       </Route>
     </Routes>
   );
