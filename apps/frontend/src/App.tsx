@@ -23,6 +23,15 @@ import { DriverLayout } from './features/driver/components/DriverLayout';
 import DriverHomePage from './pages/DriverHomePage';
 import DriverActiveTripPage from './pages/DriverActiveTripPage';
 import DriverProfilePage from './pages/DriverProfilePage';
+import { AdminLayout } from './features/admin/components/AdminLayout';
+import AdminDashboardPage from './pages/AdminDashboardPage';
+import AdminBusesPage from './pages/AdminBusesPage';
+import AdminRoutesPage from './pages/AdminRoutesPage';
+import AdminDriversPage from './pages/AdminDriversPage';
+import AdminSchedulesPage from './pages/AdminSchedulesPage';
+import AdminNoticesPage from './pages/AdminNoticesPage';
+import AdminComplaintsPage from './pages/AdminComplaintsPage';
+import AdminAlertsPage from './pages/AdminAlertsPage';
 
 export default function App() {
   return (
@@ -57,6 +66,18 @@ export default function App() {
         <Route path="/driver" element={<DriverHomePage />} />
         <Route path="/driver/trips/:tripId" element={<DriverActiveTripPage />} />
         <Route path="/driver/profile" element={<DriverProfilePage />} />
+      </Route>
+
+      {/* Admin module — sidebar shell, desktop-first */}
+      <Route element={<AdminLayout />}>
+        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/admin/buses" element={<AdminBusesPage />} />
+        <Route path="/admin/routes" element={<AdminRoutesPage />} />
+        <Route path="/admin/drivers" element={<AdminDriversPage />} />
+        <Route path="/admin/schedules" element={<AdminSchedulesPage />} />
+        <Route path="/admin/notices" element={<AdminNoticesPage />} />
+        <Route path="/admin/complaints" element={<AdminComplaintsPage />} />
+        <Route path="/admin/alerts" element={<AdminAlertsPage />} />
       </Route>
     </Routes>
   );

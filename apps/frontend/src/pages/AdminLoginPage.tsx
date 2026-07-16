@@ -23,7 +23,7 @@ export default function AdminLoginPage() {
     try {
       const result = await mockLogin({ identifier: adminId, password });
       showToast(`Welcome back, ${result.name}.`, 'success');
-      navigate('/');
+      navigate('/admin');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed.');
     } finally {
