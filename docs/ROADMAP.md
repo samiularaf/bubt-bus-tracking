@@ -9,10 +9,10 @@ Every phase requires explicit approval before the next begins. No phase is skipp
 | 2 | System Architecture | Folder structure, frontend/backend/DB/API architecture, auth flow, real-time flow, deployment flow | ✅ Complete |
 | 3 | Database Design | ER diagram, tables, relationships, indexes, constraints, seed data plan, SQL schema | ✅ Complete |
 | 4 | API Design | Full REST API documentation (all endpoints, request/response formats, error handling) | ✅ Complete |
-| 5 | UI/UX Planning | Screen list, navigation flow, journeys, reusable components, theme/color/typography/spacing | 🟡 In Progress |
-| 6 | Project Setup | Git repo, frontend/backend/DB init, dependencies, linting/formatting, first commit | ⬜ Not Started |
-| 7 | Frontend Development | Auth, User module, Driver module, Admin module (mock data, no backend) | ⬜ Not Started |
-| 8 | Backend Development | Auth, DB, REST APIs, validation, RBAC, JWT, PostgreSQL connection | ⬜ Not Started |
+| 5 | UI/UX Planning | Screen list, navigation flow, journeys, reusable components, theme/color/typography/spacing | ✅ Complete |
+| 6 | Project Setup | Git repo, frontend/backend/DB init, dependencies, linting/formatting, first commit | ✅ Complete |
+| 7 | Frontend Development | Auth, User module, Driver module, Admin module (mock data, no backend) | ✅ Complete |
+| 8 | Backend Development | Auth, DB, REST APIs, validation, RBAC, JWT, PostgreSQL connection | 🟡 In Progress |
 | 9 | Real-Time System | Socket.IO, driver GPS, live tracking, trip status updates | ⬜ Not Started |
 | 10 | Notification System | Trip started, reminder, delay, cancellation, schedule change, emergency | ⬜ Not Started |
 | 11 | Testing | Unit, integration, UI, performance testing; bug fixes | ⬜ Not Started |
@@ -24,10 +24,10 @@ flowchart LR
     P1 --> P2[2. Architecture ✅]
     P2 --> P3[3. Database Design ✅]
     P3 --> P4[4. API Design ✅]
-    P4 --> P5[5. UI/UX Planning 🟡]
-    P5 --> P6[6. Project Setup]
-    P6 --> P7[7. Frontend Dev]
-    P7 --> P8[8. Backend Dev]
+    P4 --> P5[5. UI/UX Planning ✅]
+    P5 --> P6[6. Project Setup ✅]
+    P6 --> P7[7. Frontend Dev ✅]
+    P7 --> P8[8. Backend Dev 🟡]
     P8 --> P9[9. Real-Time System]
     P9 --> P10[10. Notifications]
     P10 --> P11[11. Testing]
@@ -43,4 +43,7 @@ flowchart LR
 | 2 | — | ARCHITECTURE.md approved |
 | 3 | — | DATABASE_DESIGN.md + schema.sql approved; day_group model added for real Sun-Thu/Friday schedule variation |
 | 4 | — | API_DESIGN.md approved |
-| 5 | *(pending)* | UI_UX_PLANNING.md |
+| 5 | — | UI_UX_PLANNING.md approved |
+| 6 | — | Monorepo scaffold committed (`640da6b`); class diagram added (`0d48b0c`) |
+| 7 | — | 4 modules, 4 commits: Auth (`e21d857`), User (`7340e45`), Driver (`5417587`), Admin (`cc6bd75`) |
+| 8 | *(pending)* | Full backend implementation committed (`b6e4636`) — see docs/SETUP_NOTES.md for verification approach and limits |
