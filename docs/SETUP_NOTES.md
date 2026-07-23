@@ -23,3 +23,14 @@
 ## Patched without hesitation
 
 `bcrypt` and `node-cron` were bumped to their latest majors (`^6.0.0` and `^4.6.0` respectively) specifically to resolve real `npm audit` findings (a `tar` path-traversal chain and a `uuid` buffer bounds issue). Both packages have small, stable APIs where a major version bump carries low compatibility risk.
+
+## Phase 8: verifying backend code without a real database
+
+This sandbox cannot reach `binaries.prisma.sh`, so `prisma generate` / `prisma migrate` cannot run here — there is no way to obtain a real, working `@prisma/client` in this environment. To still verify the Phase 8 backend code was genuinely correct (not just "looks right"), two *temporary* stub files were used and then deleted before each commit:
+
+1. **`node_modules/@prisma/client/index.d.ts`** — type declarations only, mirroring the real shape Prisma would generate (models as typed CRUD methods, enums as `const` object + derived union type, matching Prisma's actual codegen pattern rather than a nominal TS `enum`). Used for `tsc --noEmit`.
+2. **`node_modules/@prisma/client/index.js`** — a runtime-executable version of the same stub (in-memory no-op models returning empty results) — used to actually **boot the Express server** and hit real endpoints with `curl`, proving the full middleware chain (CORS → JSON parsing → routing → Zod validation → JWT auth → RBAC → error handling) works correctly end-to-end. This caught real bugs (see commit history) that typechecking alone would have missed — e.g. `jsonwebtoken` v9's stricter `expiresIn` typing, and an incorrect enum pattern in the first stub draft.
+
+**What this proves:** request routing, validation rejection messages, JWT sign/verify, RBAC (a `user`-role token is correctly `403`'d off an admin route; an `admin`-role token correctly passes through to the next layer), and error envelope shape are all genuinely correct.
+
+**What this does NOT prove:** that any individual Prisma query (field names, relation includes, compound unique key names like `userId_busId`) is 100% correct against the real generated client — that requires running `prisma generate` with real network access, which the next developer should do as the very first step in Phase 9+ or before deploying Phase 8. Cross-referenced `schema.prisma` carefully while writing each service, but this is the one category of bug this sandbox cannot fully catch.

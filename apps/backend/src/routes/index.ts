@@ -1,16 +1,20 @@
 import { Router } from 'express';
 import { healthRouter } from './health.js';
+import { authRouter } from './auth.js';
+import { userRouter } from './users.js';
+import { busRouter } from './buses.js';
+import { tripRouter } from './trips.js';
+import { scheduleRouter } from './schedules.js';
+import { noticeAndComplaintRouter } from './notices.js';
+import { driverRouter } from './drivers.js';
 
 export const apiRouter = Router();
 
 apiRouter.use(healthRouter);
-
-// Phase 8 wires up the rest of API_DESIGN.md here, e.g.:
-// apiRouter.use('/auth', authRouter);
-// apiRouter.use('/users', usersRouter);
-// apiRouter.use('/buses', busesRouter);
-// apiRouter.use('/trips', tripsRouter);
-// apiRouter.use('/notices', noticesRouter);
-// apiRouter.use('/complaints', complaintsRouter);
-// apiRouter.use('/admin', adminRouter);
-// apiRouter.use('/driver', driverRouter);
+apiRouter.use(authRouter);
+apiRouter.use(userRouter);
+apiRouter.use(busRouter);
+apiRouter.use(tripRouter);
+apiRouter.use(scheduleRouter);
+apiRouter.use(noticeAndComplaintRouter);
+apiRouter.use(driverRouter);

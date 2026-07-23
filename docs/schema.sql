@@ -49,6 +49,7 @@ CREATE TABLE buses (
     id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     bus_number  VARCHAR(20) NOT NULL UNIQUE,
     route_id    UUID NOT NULL REFERENCES routes(id) ON DELETE RESTRICT,
+    is_active   BOOLEAN NOT NULL DEFAULT true,
     created_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at  TIMESTAMPTZ NOT NULL DEFAULT now()
 );

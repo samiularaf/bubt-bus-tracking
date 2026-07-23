@@ -156,6 +156,7 @@ model Bus {
   busNumber  String   @unique @map("bus_number")
   routeId    String   @map("route_id")
   route      Route    @relation(fields: [routeId], references: [id])
+  isActive   Boolean  @default(true) @map("is_active")
   createdAt  DateTime @default(now()) @map("created_at")
   updatedAt  DateTime @updatedAt @map("updated_at")
 

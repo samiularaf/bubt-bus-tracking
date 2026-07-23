@@ -52,6 +52,7 @@ erDiagram
         uuid id PK
         string bus_number UK
         uuid route_id FK
+        boolean is_active
         timestamp created_at
         timestamp updated_at
     }
@@ -142,7 +143,7 @@ erDiagram
 Single table for all three roles, per the confirmed auth model. Role-specific columns are nullable and enforced by a `CHECK` constraint (see §4) rather than split into separate tables.
 
 ### `buses`
-`bus_number` unique (e.g. "BUBT-01"). One route per bus (`route_id`).
+`bus_number` unique (e.g. "BUBT-01"). One route per bus (`route_id`). `is_active` added in Phase 8 — the original Phase 3 schema omitted it, but `API_DESIGN.md`'s `PATCH /admin/buses/:id/status` endpoint and the Phase 7 Admin UI both assume bus activate/deactivate exists; this closes that gap rather than working around it.
 
 ### `routes`
 Just a name/label; the actual path is defined by its ordered `stops`.
