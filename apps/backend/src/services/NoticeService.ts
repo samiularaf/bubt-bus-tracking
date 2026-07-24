@@ -1,5 +1,6 @@
 import { prisma } from '../config/prisma.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { notificationService } from './NotificationService.js';
 import type { CreateNoticeInput, UpdateNoticeInput } from '../validation/misc.js';
 import type { NoticeCategory } from '@prisma/client';
 import type { PaginationQuery } from '../validation/misc.js';
@@ -25,9 +26,13 @@ export class NoticeService {
     return notice;
   }
 
-  /** Publishing triggers a push + in-app notification to all users — wired up in Phase 10. */
+  /** Publishing triggers a push + in-app notification to all users, per Phase 10. */
   async publish(adminUserId: string, input: CreateNoticeInput) {
-    return prisma.notice.create({ data: { ...input, createdBy: adminUserId } });
+    const notice = await prisma.notice.create({ data: { ...input, createdBy: adminUserId } });
+    notificationService.notifyNoticePublished(notice).catch((err) => {
+      console.error(`[notifications] failed to notify notice ${notice.id}:`, err);
+    });
+    return notice;
   }
 
   async update(noticeId: string, input: UpdateNoticeInput) {

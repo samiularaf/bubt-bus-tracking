@@ -19,8 +19,8 @@ export default tseslint.config(
     },
   },
   {
-    // Seed/CLI scripts legitimately log progress to stdout.
-    files: ['**/prisma/seed.ts', '**/scripts/**'],
+    // Seed/CLI scripts and background jobs legitimately log progress/status to stdout.
+    files: ['**/prisma/seed.ts', '**/scripts/**', '**/jobs/**', '**/backend/src/index.ts'],
     rules: {
       'no-console': 'off',
     },

@@ -137,7 +137,7 @@ export class TripService {
 
     return prisma.emergencyAlert.create({
       data: { tripId, driverId, message },
-      include: { driver: true },
+      include: { driver: true, trip: { include: { bus: true } } },
     });
     // Phase 9 wires the actual broadcast to admin:live + broadcast:all rooms.
   }

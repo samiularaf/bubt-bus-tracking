@@ -1,5 +1,6 @@
 import { prisma } from '../config/prisma.js';
 import { AppError } from '../middleware/errorHandler.js';
+import { notificationService } from './NotificationService.js';
 import type {
   CreateScheduleInput,
   UpdateScheduleInput,
@@ -46,6 +47,10 @@ export class ScheduleService {
 
     await this.generateTripsForDate(new Date());
     await this.generateTripsForDate(new Date(Date.now() + 86_400_000));
+
+    notificationService.notifyScheduleChanged(schedule.name).catch((err) => {
+      console.error(`[notifications] failed to notify schedule change for ${schedule.id}:`, err);
+    });
   }
 
   async listTemplates(scheduleId: string) {
