@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { ArrowLeft, Clock, Navigation2, Phone } from 'lucide-react';
+import { ArrowLeft, Clock, Navigation2, Phone, Satellite } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { Card } from '../components/Card';
 import { mockGetBus, type MockBus } from '../features/buses/api';
 import { mockGetTrip, type MockTrip } from '../features/trips/api';
 import { estimateEtaMinutes } from '../lib/haversine';
+import { useLiveTripPosition } from '../hooks/useLiveTripPosition';
 
 // Default Leaflet marker icons don't resolve correctly under Vite's bundler
 // without this explicit override — a well-known Leaflet+bundler quirk.
@@ -18,13 +19,23 @@ const busIcon = new L.Icon({
   iconAnchor: [12, 41],
 });
 
+// Starting fallback position shown until a real live update arrives over
+// the socket (see useLiveTripPosition) — was previously a permanent mock.
+const FALLBACK_POSITION = {
+  lat: 23.8062,
+  lng: 90.3687,
+  speedKmh: null,
+  timestamp: new Date().toISOString(),
+};
+
 export default function LiveTrackingPage() {
   const { tripId } = useParams<{ tripId: string }>();
   const navigate = useNavigate();
 
   const [bus, setBus] = useState<MockBus | null>(null);
   const [trip, setTrip] = useState<MockTrip | null>(null);
-  const [mockPosition] = useState({ lat: 23.8062, lng: 90.3687 }); // static mock position
+
+  const { position, hasReceivedLive } = useLiveTripPosition(tripId ?? null, FALLBACK_POSITION);
 
   useEffect(() => {
     if (!tripId) return;
@@ -41,7 +52,7 @@ export default function LiveTrackingPage() {
   }
 
   const destinationStop = bus.stops[bus.stops.length - 1];
-  const eta = estimateEtaMinutes(mockPosition, {
+  const eta = estimateEtaMinutes(position, {
     lat: destinationStop.latitude,
     lng: destinationStop.longitude,
   });
@@ -52,12 +63,20 @@ export default function LiveTrackingPage() {
         <button onClick={() => navigate(-1)} aria-label="Back" className="text-textPrimary">
           <ArrowLeft size={20} />
         </button>
-        <h1 className="text-lg font-bold text-textPrimary">{bus.busNumber} — Live</h1>
+        <h1 className="text-lg font-bold text-textPrimary flex-1">{bus.busNumber} — Live</h1>
+        <span
+          className={`flex items-center gap-1 text-[11px] font-semibold px-2 py-1 rounded-full ${
+            hasReceivedLive ? 'bg-success/10 text-success' : 'bg-neutral/10 text-neutral'
+          }`}
+        >
+          <Satellite size={11} />
+          {hasReceivedLive ? 'Live' : 'Connecting...'}
+        </span>
       </div>
 
       <div className="h-64 w-full">
         <MapContainer
-          center={[mockPosition.lat, mockPosition.lng]}
+          center={[position.lat, position.lng]}
           zoom={13}
           scrollWheelZoom={false}
           style={{ height: '100%', width: '100%' }}
@@ -66,7 +85,7 @@ export default function LiveTrackingPage() {
             attribution="&copy; OpenStreetMap contributors"
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <Marker position={[mockPosition.lat, mockPosition.lng]} icon={busIcon}>
+          <Marker position={[position.lat, position.lng]} icon={busIcon}>
             <Popup>{bus.busNumber} is here</Popup>
           </Marker>
         </MapContainer>

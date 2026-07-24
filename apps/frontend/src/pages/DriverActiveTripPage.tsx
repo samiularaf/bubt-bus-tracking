@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, MapPin, AlertTriangle, Wifi } from 'lucide-react';
+import { ArrowLeft, MapPin, AlertTriangle, Wifi, WifiOff } from 'lucide-react';
 import { Card } from '../components/Card';
 import { StatusBadge, type BadgeStatus } from '../components/StatusBadge';
 import { SlideToConfirm } from '../components/SlideToConfirm';
 import { Button } from '../components/Button';
 import { Modal } from '../components/Modal';
 import { useToast } from '../components/Toast';
+import { useDriverTracking } from '../hooks/useDriverTracking';
 import {
   mockGetDriverContext,
   mockGetDriverTodayTrips,
@@ -29,7 +30,11 @@ export default function DriverActiveTripPage() {
   const [trip, setTrip] = useState<MockTrip | null>(null);
   const [isEmergencyOpen, setIsEmergencyOpen] = useState(false);
   const [isSendingAlert, setIsSendingAlert] = useState(false);
-  const [gpsTick, setGpsTick] = useState(0);
+
+  // Real device GPS, broadcast over Socket.IO while running — replaces the
+  // Phase 7 simulated heartbeat. See useDriverTracking.ts for the offline
+  // caching/flush behavior and the noted socket-auth follow-up.
+  const tracking = useDriverTracking(tripId ?? null, trip?.status === 'running');
 
   async function refresh() {
     const [ctx, trips] = await Promise.all([mockGetDriverContext(), mockGetDriverTodayTrips()]);
@@ -40,13 +45,6 @@ export default function DriverActiveTripPage() {
   useEffect(() => {
     refresh();
   }, [tripId]);
-
-  // Simulated GPS heartbeat while running, purely visual for the mock.
-  useEffect(() => {
-    if (trip?.status !== 'running') return;
-    const interval = setInterval(() => setGpsTick((t) => t + 1), 3000);
-    return () => clearInterval(interval);
-  }, [trip?.status]);
 
   async function handleStart() {
     if (!tripId) return;
@@ -93,16 +91,28 @@ export default function DriverActiveTripPage() {
       </Card>
 
       {trip.status === 'running' && (
-        <Card className="mb-5 flex items-center gap-2 bg-success/5 border-success/20">
-          <Wifi size={16} className="text-success" />
+        <Card
+          className={`mb-5 flex items-center gap-2 ${
+            tracking.isOffline ? 'bg-warning/5 border-warning/20' : 'bg-success/5 border-success/20'
+          }`}
+        >
+          {tracking.isOffline ? (
+            <WifiOff size={16} className="text-warning" />
+          ) : (
+            <Wifi size={16} className="text-success" />
+          )}
           <p className="text-xs text-textPrimary">
-            Broadcasting GPS live
+            {tracking.isOffline ? 'Offline — caching GPS points locally' : 'Broadcasting GPS live'}
             <span className="text-textSecondary">
               {' '}
-              · {gpsTick} update{gpsTick === 1 ? '' : 's'} sent
+              · {tracking.updatesSent} update{tracking.updatesSent === 1 ? '' : 's'} sent
             </span>
           </p>
         </Card>
+      )}
+
+      {trip.status === 'running' && tracking.lastError && (
+        <p className="text-xs text-danger mb-4">{tracking.lastError}</p>
       )}
 
       {trip.status === 'upcoming' && (

@@ -1,7 +1,7 @@
 import { prisma } from '../config/prisma.js';
 import { AppError } from '../middleware/errorHandler.js';
 import { estimateEtaMinutes } from '../utils/haversine.js';
-import type { EtaQuery, PositionInput } from '../validation/trip.js';
+import type { EtaQuery } from '../validation/trip.js';
 
 export class TripService {
   async getTodayTrips(busId: string) {
@@ -111,6 +111,7 @@ export class TripService {
     return prisma.trip.update({
       where: { id: tripId },
       data: { status: 'running', startedAt: new Date(), driverId },
+      include: { bus: true },
     });
   }
 
@@ -134,32 +135,15 @@ export class TripService {
     const trip = await prisma.trip.findUnique({ where: { id: tripId } });
     if (!trip) throw new AppError('NOT_FOUND', 'Trip not found.', 404);
 
-    return prisma.emergencyAlert.create({ data: { tripId, driverId, message } });
+    return prisma.emergencyAlert.create({
+      data: { tripId, driverId, message },
+      include: { driver: true },
+    });
     // Phase 9 wires the actual broadcast to admin:live + broadcast:all rooms.
   }
 
-  async ingestPosition(tripId: string, position: PositionInput): Promise<void> {
-    const trip = await prisma.trip.findUnique({ where: { id: tripId } });
-    if (!trip) throw new AppError('NOT_FOUND', 'Trip not found.', 404);
-    if (trip.status !== 'running') {
-      throw new AppError(
-        'TRIP_NOT_RUNNING',
-        'Cannot record a position for a trip that is not running.',
-        409,
-      );
-    }
-
-    await prisma.tripPosition.create({
-      data: {
-        tripId,
-        latitude: position.lat,
-        longitude: position.lng,
-        speedKmh: position.speedKmh,
-        recordedAt: new Date(position.timestamp),
-      },
-    });
-    // Phase 9 wires the live broadcast; this is the debounced-persistence half only.
-  }
+  // GPS ingestion (broadcast + debounced persistence) is owned by TrackingService
+  // as of Phase 9 — see services/TrackingService.ts. Previously duplicated here.
 }
 
 export const tripService = new TripService();
