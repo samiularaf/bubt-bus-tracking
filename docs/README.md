@@ -42,6 +42,7 @@ Users are **not** assigned to a fixed bus. They browse all buses and routes, and
 | [`schema.sql`](./schema.sql) | Runnable PostgreSQL DDL for the full schema |
 | [`API_DESIGN.md`](./API_DESIGN.md) | Full REST API contract — all endpoints, request/response formats, error codes, role access matrix |
 | [`UI_UX_PLANNING.md`](./UI_UX_PLANNING.md) | Screen list, navigation, journeys, reusable components, design system (color/typography/spacing) |
+| [`TESTING.md`](./TESTING.md) | Test strategy, coverage summary, and performance baseline (Phase 11) |
 | [`FEATURES.md`](./FEATURES.md) | Complete feature checklist by role |
 | [`USER_FLOW.md`](./USER_FLOW.md) | Step-by-step journeys for User, Driver, Administrator |
 | [`ROADMAP.md`](./ROADMAP.md) | 13-phase development roadmap with approval gates |

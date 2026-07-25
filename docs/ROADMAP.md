@@ -15,7 +15,7 @@ Every phase requires explicit approval before the next begins. No phase is skipp
 | 8 | Backend Development | Auth, DB, REST APIs, validation, RBAC, JWT, PostgreSQL connection | ✅ Complete |
 | 9 | Real-Time System | Socket.IO, driver GPS, live tracking, trip status updates | ✅ Complete |
 | 10 | Notification System | Trip started, reminder, delay, cancellation, schedule change, emergency | ✅ Complete |
-| 11 | Testing | Unit, integration, UI, performance testing; bug fixes | ⬜ Not Started |
+| 11 | Testing | Unit, integration, UI, performance testing; bug fixes | ✅ Complete |
 | 12 | Deployment | Frontend → Cloudflare Pages, Backend → Railway, DB → Supabase, production verification | ⬜ Not Started |
 
 ```mermaid
@@ -30,7 +30,7 @@ flowchart LR
     P7 --> P8[8. Backend Dev ✅]
     P8 --> P9[9. Real-Time System ✅]
     P9 --> P10[10. Notifications ✅]
-    P10 --> P11[11. Testing]
+    P10 --> P11[11. Testing ✅]
     P11 --> P12[12. Deployment]
 ```
 
@@ -48,4 +48,5 @@ flowchart LR
 | 7 | — | 4 modules, 4 commits: Auth (`e21d857`), User (`7340e45`), Driver (`5417587`), Admin (`cc6bd75`) |
 | 8 | — | Full backend implementation committed (`b6e4636`) — see docs/SETUP_NOTES.md for verification approach and limits |
 | 9 | — | Socket.IO real-time system committed (`270ea4b`) — server-side verified with a genuine socket integration test (7/7); known limitation: sockets not yet JWT-authenticated, flagged for Phase 11 |
-| 10 | *(pending)* | Notification system committed (`9a79c69`) — verified with a runtime reminder-check test (7/7); known limitation: frontend push subscription registration will 401 until real session wiring lands |
+| 10 | — | Notification system committed (`9a79c69`) — verified with a runtime reminder-check test (7/7); known limitation: frontend push subscription registration will 401 until real session wiring lands |
+| 11 | *(pending)* | Testing committed (`1356093`) — 100 real tests (67 backend + 33 frontend), all passing; real bugs found and fixed (vi.mock hoisting, missing RTL cleanup, react-router CVEs); real autocannon performance baseline captured; see docs/TESTING.md |
