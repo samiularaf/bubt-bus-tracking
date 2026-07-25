@@ -10,7 +10,7 @@ import type {
 import type { DayGroup } from '@prisma/client';
 
 /** Sunday=0 ... Saturday=6. Saturday has no bus service at all, per the real BUBT notice. */
-function resolveDayGroup(date: Date): DayGroup | null {
+export function resolveDayGroup(date: Date): DayGroup | null {
   const day = date.getDay();
   if (day === 6) return null; // Saturday — no service
   if (day === 5) return 'friday';
