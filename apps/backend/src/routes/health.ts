@@ -17,13 +17,14 @@ healthRouter.get('/health', async (_req, res) => {
     dbStatus = 'unreachable';
   }
 
-  res.json({
-    success: true,
+  const statusCode = dbStatus === 'ok' ? 200 : 503;
+  res.status(statusCode).json({
+    success: dbStatus === 'ok',
     data: {
-      status: 'ok',
+      status: dbStatus === 'ok' ? 'ok' : 'degraded',
       db: dbStatus,
       timestamp: new Date().toISOString(),
     },
-    error: null,
+    error: dbStatus === 'ok' ? null : { code: 'INTERNAL_ERROR', message: 'Database unreachable.' },
   });
 });
