@@ -5,7 +5,7 @@
     "buildCommand": "npm ci && npm run prisma:generate -w apps/backend && npm run build:backend"
   },
   "deploy": {
-    "startCommand": "node apps/backend/dist/index.js",
+    "startCommand": "node apps/backend/dist/src/index.js",
     "healthcheckPath": "/api/v1/health",
     "healthcheckTimeout": 100,
     "restartPolicyType": "ON_FAILURE",
