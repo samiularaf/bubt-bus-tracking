@@ -15,11 +15,11 @@ This project follows a strict phase-gated development process. See [`ROADMAP.md`
 
 ## The Three Roles
 
-| Role | Who | Can self-register? |
-|---|---|---|
-| **User** | Student / Teacher / Staff (identical permissions) | Yes — email + OTP verification |
-| **Driver** | Bus drivers | No — created by Administrator |
-| **Administrator** | Transport office staff | No — fixed seed accounts (v1) |
+| Role              | Who                                               | Can self-register?             |
+| ----------------- | ------------------------------------------------- | ------------------------------ |
+| **User**          | Student / Teacher / Staff (identical permissions) | Yes — email + OTP verification |
+| **Driver**        | Bus drivers                                       | No — created by Administrator  |
+| **Administrator** | Transport office staff                            | No — fixed seed accounts (v1)  |
 
 Full detail: [`ACTOR_AUTH_AND_CREDENTIALS.pdf`](./ACTOR_AUTH_AND_CREDENTIALS.pdf)
 
@@ -33,23 +33,23 @@ Users are **not** assigned to a fixed bus. They browse all buses and routes, and
 
 ## Documentation Index
 
-| Document | Purpose |
-|---|---|
-| [`PROJECT_SPECIFICATION.md`](./PROJECT_SPECIFICATION.md) | Full functional specification — goals, roles, business logic, features |
-| [`ARCHITECTURE.md`](./ARCHITECTURE.md) | System architecture — folder structure, frontend/backend/DB/API design, auth & realtime flow, deployment |
-| [`CLASS_DIAGRAM.md`](./CLASS_DIAGRAM.md) | Domain model and service-layer class diagrams |
-| [`DATABASE_DESIGN.md`](./DATABASE_DESIGN.md) | ER diagram, table reference, relationships, constraints, indexes, seed data plan |
-| [`schema.sql`](./schema.sql) | Runnable PostgreSQL DDL for the full schema |
-| [`API_DESIGN.md`](./API_DESIGN.md) | Full REST API contract — all endpoints, request/response formats, error codes, role access matrix |
-| [`UI_UX_PLANNING.md`](./UI_UX_PLANNING.md) | Screen list, navigation, journeys, reusable components, design system (color/typography/spacing) |
-| [`TESTING.md`](./TESTING.md) | Test strategy, coverage summary, and performance baseline (Phase 11) |
-| [`FEATURES.md`](./FEATURES.md) | Complete feature checklist by role |
-| [`USER_FLOW.md`](./USER_FLOW.md) | Step-by-step journeys for User, Driver, Administrator |
-| [`ROADMAP.md`](./ROADMAP.md) | 13-phase development roadmap with approval gates |
-| [`PROJECT_RULES.md`](./PROJECT_RULES.md) | Development rules and working agreement |
-| [`TECH_STACK.md`](./TECH_STACK.md) | Full technology stack and rationale |
-| [`PROJECT_OVERVIEW.md`](./PROJECT_OVERVIEW.md) | Visual/diagram-first orientation report (Phase 0 output) |
-| [`ACTOR_AUTH_AND_CREDENTIALS.pdf`](./ACTOR_AUTH_AND_CREDENTIALS.pdf) | Authentication flows, profile fields, and seed admin credentials |
+| Document                                                             | Purpose                                                                                                  |
+| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| [`PROJECT_SPECIFICATION.md`](./PROJECT_SPECIFICATION.md)             | Full functional specification — goals, roles, business logic, features                                   |
+| [`ARCHITECTURE.md`](./ARCHITECTURE.md)                               | System architecture — folder structure, frontend/backend/DB/API design, auth & realtime flow, deployment |
+| [`CLASS_DIAGRAM.md`](./CLASS_DIAGRAM.md)                             | Domain model and service-layer class diagrams                                                            |
+| [`DATABASE_DESIGN.md`](./DATABASE_DESIGN.md)                         | ER diagram, table reference, relationships, constraints, indexes, seed data plan                         |
+| [`schema.sql`](./schema.sql)                                         | Runnable PostgreSQL DDL for the full schema                                                              |
+| [`API_DESIGN.md`](./API_DESIGN.md)                                   | Full REST API contract — all endpoints, request/response formats, error codes, role access matrix        |
+| [`UI_UX_PLANNING.md`](./UI_UX_PLANNING.md)                           | Screen list, navigation, journeys, reusable components, design system (color/typography/spacing)         |
+| [`TESTING.md`](./TESTING.md)                                         | Test strategy, coverage summary, and performance baseline (Phase 11)                                     |
+| [`FEATURES.md`](./FEATURES.md)                                       | Complete feature checklist by role                                                                       |
+| [`USER_FLOW.md`](./USER_FLOW.md)                                     | Step-by-step journeys for User, Driver, Administrator                                                    |
+| [`ROADMAP.md`](./ROADMAP.md)                                         | 13-phase development roadmap with approval gates                                                         |
+| [`PROJECT_RULES.md`](./PROJECT_RULES.md)                             | Development rules and working agreement                                                                  |
+| [`TECH_STACK.md`](./TECH_STACK.md)                                   | Full technology stack and rationale                                                                      |
+| [`PROJECT_OVERVIEW.md`](./PROJECT_OVERVIEW.md)                       | Visual/diagram-first orientation report (Phase 0 output)                                                 |
+| [`ACTOR_AUTH_AND_CREDENTIALS.pdf`](./ACTOR_AUTH_AND_CREDENTIALS.pdf) | Authentication flows, profile fields, and seed admin credentials                                         |
 
 ---
 

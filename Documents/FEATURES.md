@@ -7,6 +7,7 @@ Checklist format. This is the authoritative feature list used to scope every lat
 ## User (Student / Teacher / Staff)
 
 ### Account
+
 - [ ] Register (name, email, password, optional designation + ID number)
 - [ ] Verify email via OTP (6-digit, 10-min expiry, resend rate-limited)
 - [ ] Login / Logout
@@ -15,6 +16,7 @@ Checklist format. This is the authoritative feature list used to scope every lat
 - [ ] Change password
 
 ### Bus & Route Discovery
+
 - [ ] View all buses (number, route, current status, next trip)
 - [ ] Search buses
 - [ ] Search routes
@@ -23,6 +25,7 @@ Checklist format. This is the authoritative feature list used to scope every lat
 - [ ] Mark/unmark a bus as favorite (personal convenience pin, not an assignment — user can still track any bus)
 
 ### Trip Tracking
+
 - [ ] View Today's Trips per bus (Completed / Running / Upcoming)
 - [ ] Track a running trip live on map
 - [ ] View ETA to selected/nearest stop (auto-detected via geolocation, manually overridable)
@@ -31,17 +34,20 @@ Checklist format. This is the authoritative feature list used to scope every lat
 - [ ] Call driver (backend-mediated, number not exposed client-side)
 
 ### Reminders
+
 - [ ] Set reminder on an upcoming trip
 - [ ] Receive reminder 15 min before departure
 - [ ] Receive notification when driver starts the trip
 
 ### Notices & Notifications
+
 - [ ] View transport notices (all categories)
 - [ ] Receive Web Push notifications
 - [ ] Receive in-app notification bell (iOS Safari fallback)
 - [ ] Install-to-home-screen prompt (for iOS push support)
 
 ### Support
+
 - [ ] Report a problem
 
 ---
@@ -49,11 +55,13 @@ Checklist format. This is the authoritative feature list used to scope every lat
 ## Driver
 
 ### Account
+
 - [ ] Login with Driver ID + password (Admin-provisioned only)
 - [ ] Forced password change on first login
 - [ ] View own profile
 
 ### Trip Operations
+
 - [ ] View Today's Bus, Route, and Trips
 - [ ] "Slide to Start Trip"
 - [ ] Auto-begin GPS sharing on trip start
@@ -62,6 +70,7 @@ Checklist format. This is the authoritative feature list used to scope every lat
 - [ ] Send Emergency Alert (broadcasts to Admin + all users)
 
 ### Explicitly restricted
+
 - [ ] ~~Cannot modify buses, routes, or schedules~~
 
 ---
@@ -69,6 +78,7 @@ Checklist format. This is the authoritative feature list used to scope every lat
 ## Administrator
 
 ### User & Driver Management
+
 - [ ] View/search all users
 - [ ] Create driver profile (Name, Phone, Blood Group, NID/License, Address, Emergency Contact, Assigned Bus — all required; Email, Photo optional)
 - [ ] Edit driver profile
@@ -76,6 +86,7 @@ Checklist format. This is the authoritative feature list used to scope every lat
 - [ ] Reset driver password
 
 ### Fleet Management
+
 - [ ] Manage Buses (create/edit/deactivate)
 - [ ] Manage Routes
 - [ ] Manage Stops
@@ -83,10 +94,12 @@ Checklist format. This is the authoritative feature list used to scope every lat
 - [ ] Manage Schedules (Regular, Ramadan, Exam, Holiday, Special) — activate one at a time
 
 ### Communication
+
 - [ ] Publish Notices (categorized: General, Holiday, Ramadan, Exam, Delay, Cancellation, Emergency, Maintenance)
 - [ ] View submitted Complaints (list view only, no status workflow in v1)
 
 ### Monitoring
+
 - [ ] Monitor all live bus locations on a single dashboard
 - [ ] Receive Emergency Alerts from any driver
 

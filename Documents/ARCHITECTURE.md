@@ -1,6 +1,6 @@
 # System Architecture — BUBT Bus Tracking System
 
-Phase 2 output. This defines *how* the system is structured — no implementation yet. Database columns/indexes are finalized in Phase 3; API endpoint contracts in Phase 4; this document covers the shape everything fits into.
+Phase 2 output. This defines _how_ the system is structured — no implementation yet. Database columns/indexes are finalized in Phase 3; API endpoint contracts in Phase 4; this document covers the shape everything fits into.
 
 ---
 
@@ -93,6 +93,7 @@ flowchart TD
 **Layering rule:** Controllers never talk to the database directly — always through Services, which use Models. This keeps business logic (e.g., "what does starting a trip actually do") testable and independent of the HTTP layer, and reusable from both REST controllers and Socket.IO handlers.
 
 **Key services (Phase 8 will implement these):**
+
 - `AuthService` — registration, OTP generation/verification, login, token refresh, driver credential provisioning, password reset
 - `TripService` — trip lifecycle (start/finish), ETA calculation (haversine), status transitions
 - `ScheduleService` — schedule activation, trip regeneration from templates
@@ -106,7 +107,7 @@ flowchart TD
 - **ORM:** Prisma, single schema file, migrations tracked in `apps/backend/prisma/migrations/`.
 - **Single `users` table** with `role` enum, as confirmed — avoids join complexity for auth, keeps one login endpoint.
 - **Separation of "live" vs "historical" data:** `trips` holds current/recent state; `trip_positions` holds the GPS history stream (subject to the 30-day retention job).
-- **Schedule-driven generation:** `schedules` + `schedule_trip_templates` are the source of truth; `trips` rows are *generated* from the active template, not hand-edited per day.
+- **Schedule-driven generation:** `schedules` + `schedule_trip_templates` are the source of truth; `trips` rows are _generated_ from the active template, not hand-edited per day.
 
 ---
 
@@ -115,10 +116,12 @@ flowchart TD
 - **Style:** REST for all CRUD and command operations (`POST /trips/:id/start`, not just resource CRUD). Socket.IO strictly for streaming/live data (position updates, live status pushes) — not for anything that needs a confirmable request/response.
 - **Versioning:** all routes prefixed `/api/v1/...` from day one, so breaking changes later don't require a big-bang migration.
 - **Response envelope:** consistent shape across all endpoints —
+
 ```json
 { "success": true, "data": { ... }, "error": null }
 { "success": false, "data": null, "error": { "code": "TRIP_ALREADY_STARTED", "message": "..." } }
 ```
+
 - **Error handling:** centralized Express error-handling middleware; services throw typed errors, middleware maps them to HTTP status + the envelope above. No raw stack traces reach the client.
 - Full endpoint-by-endpoint contract is Phase 4's deliverable.
 
@@ -155,7 +158,7 @@ sequenceDiagram
 Full sequence diagram already captured in `PROJECT_OVERVIEW.md` §4. Architectural notes:
 
 - **Room strategy:** one Socket.IO room per `trip:<trip_id>`. Driver joins/broadcasts to their own trip's room; users join the room of whatever trip they're currently viewing, and leave it when they navigate away.
-- **Admin monitoring:** a separate `admin:live` room receives position updates for *all* active trips simultaneously, for the fleet-wide dashboard view.
+- **Admin monitoring:** a separate `admin:live` room receives position updates for _all_ active trips simultaneously, for the fleet-wide dashboard view.
 - **Emergency alerts:** broadcast to `admin:live` **and** a global `broadcast:all` room (confirmed: all users receive emergency alerts, not just those tracking that trip).
 - **Debounced persistence:** every GPS tick is broadcast live; only every ~10th (or time-boxed) tick is written to `trip_positions`, per the retention/cost decision in Phase 0.
 

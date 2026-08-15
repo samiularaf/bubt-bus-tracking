@@ -197,4 +197,4 @@ classDiagram
 
 ## Where this fits
 
-This diagram supplements Phase 2's `ARCHITECTURE.md` (which described the layering in prose/flowcharts but didn't include a formal class diagram) and Phase 3's `DATABASE_DESIGN.md` ER diagram (which shows the same entities as *data*, not *behavior*). Added as a retroactive Phase 2 artifact — no architectural decisions changed, this only documents structure that was already implied by `ARCHITECTURE.md` §3 and the entity list in `packages/shared-types`.
+This diagram supplements Phase 2's `ARCHITECTURE.md` (which described the layering in prose/flowcharts but didn't include a formal class diagram) and Phase 3's `DATABASE_DESIGN.md` ER diagram (which shows the same entities as _data_, not _behavior_). Added as a retroactive Phase 2 artifact — no architectural decisions changed, this only documents structure that was already implied by `ARCHITECTURE.md` §3 and the entity list in `packages/shared-types`.
